@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "electrochemical-engineering-toolkit"
-version = "0.4.0"
+version = "0.4.1"
 description = "Electrochemical engineering calculations you can check: impedance fitting, electrolyser and flow battery models, corrosion and Tafel analysis, and validated measurement reports."
 readme = "README.md"
 requires-python = ">=3.10"

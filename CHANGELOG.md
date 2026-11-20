@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.1
+
+- First release archived on Zenodo, so each version now gets a citable DOI. No code changes.
+
 ## 0.4.0
 
 - Three new studies, each with a model module, run script, figure and tests:
