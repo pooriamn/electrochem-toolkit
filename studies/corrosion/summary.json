@@ -1,0 +1,147 @@
+{
+  "A": {
+    "description": "deaerated acid",
+    "true": {
+      "Ecorr_V": -0.5,
+      "icorr_uA_cm2": 50.0,
+      "corrosion_rate_mm_y": 0.5800406607369759
+    },
+    "tafel_slopes_from_extrapolation_V": {
+      "beta_a": 0.0594022351643477,
+      "beta_c": 0.11794869957183791
+    },
+    "Rp_ohm_cm2": 342.5665020321681,
+    "estimates_uA_cm2": {
+      "Tafel extrapolation": 47.822159796189126,
+      "LPR, B = 26 mV": 75.89767197248759,
+      "LPR, B from Tafel fit": 50.08433135735645,
+      "mixed-potential fit": 50.08426587673895
+    },
+    "ratio_to_true": {
+      "Tafel extrapolation": 0.9564431959237826,
+      "LPR, B = 26 mV": 1.5179534394497518,
+      "LPR, B from Tafel fit": 1.001686627147129,
+      "mixed-potential fit": 1.0016853175347789
+    },
+    "fit": {
+      "model_selected": "activation",
+      "parameters": {
+        "Ecorr_V": -0.5000079311271736,
+        "log10_icorr": -4.300298687628551,
+        "beta_a_V": 0.06001394942062288,
+        "beta_c_V": 0.12007042968927138,
+        "Ru_ohm_cm2": 1.6303024862852763e-05
+      },
+      "standard_errors": {
+        "Ecorr_V": 1.8275838206415905e-06,
+        "log10_icorr": 0.0009117452445610276,
+        "beta_a_V": 3.182955997225545e-05,
+        "beta_c_V": 9.695378172696604e-05,
+        "Ru_ohm_cm2": 0.00029323322860575
+      },
+      "aicc": {
+        "activation": 477.88384501712613,
+        "diffusion": 479.95368208224585
+      },
+      "n": 501
+    }
+  },
+  "B": {
+    "description": "aerated chloride",
+    "true": {
+      "Ecorr_V": -0.6477310637384308,
+      "icorr_uA_cm2": 28.90578737253315,
+      "corrosion_rate_mm_y": 0.33533064013373326
+    },
+    "tafel_slopes_from_extrapolation_V": {
+      "beta_a": 0.0666995202062906,
+      "beta_c": 1.2779359827039674
+    },
+    "Rp_ohm_cm2": 1019.6595245596992,
+    "estimates_uA_cm2": {
+      "Tafel extrapolation": 23.501859502546207,
+      "LPR, B = 26 mV": 25.49870753301412,
+      "LPR, B from Tafel fit": 26.99954004164347,
+      "mixed-potential fit": 29.01541378339853
+    },
+    "ratio_to_true": {
+      "Tafel extrapolation": 0.8130503141000108,
+      "LPR, B = 26 mV": 0.8821315677857471,
+      "LPR, B from Tafel fit": 0.934053090949495,
+      "mixed-potential fit": 1.003792541938143
+    },
+    "fit": {
+      "model_selected": "diffusion",
+      "parameters": {
+        "Ecorr_V": -0.6477469824522805,
+        "log10_icorr": -4.537371231662769,
+        "beta_a_V": 0.07005438971204125,
+        "beta_c_V": 0.13225332130192902,
+        "log10_ilim_over_icorr": 0.01603304613671417,
+        "Ru_ohm_cm2": 2.6097981386385645e-32
+      },
+      "standard_errors": {
+        "Ecorr_V": 5.063360649445096e-06,
+        "log10_icorr": 0.007995428041868865,
+        "beta_a_V": 0.0002311058022874286,
+        "beta_c_V": 0.05342637348110233,
+        "log10_ilim_over_icorr": 0.0073335564679007075,
+        "Ru_ohm_cm2": 0.0039628370151545125
+      },
+      "aicc": {
+        "activation": 47816.843536653745,
+        "diffusion": 489.60552146919923
+      },
+      "n": 501
+    }
+  },
+  "C": {
+    "description": "aerated, low conductivity",
+    "true": {
+      "Ecorr_V": -0.6477310637384308,
+      "icorr_uA_cm2": 28.90578737253315,
+      "corrosion_rate_mm_y": 0.33533064013373326
+    },
+    "tafel_slopes_from_extrapolation_V": {
+      "beta_a": 0.18038407622941607,
+      "beta_c": 0.697965306370262
+    },
+    "Rp_ohm_cm2": 1836.639667220501,
+    "estimates_uA_cm2": {
+      "Tafel extrapolation": 19.240517787439245,
+      "LPR, B = 26 mV": 14.156287955681252,
+      "LPR, B from Tafel fit": 33.894176254883774,
+      "mixed-potential fit": 29.82283507709316
+    },
+    "ratio_to_true": {
+      "Tafel extrapolation": 0.6656285656387954,
+      "LPR, B = 26 mV": 0.4897388807728114,
+      "LPR, B from Tafel fit": 1.1725740530109443,
+      "mixed-potential fit": 1.0317254013094763
+    },
+    "fit": {
+      "model_selected": "diffusion",
+      "parameters": {
+        "Ecorr_V": -0.6477583986492121,
+        "log10_icorr": -4.525451073162993,
+        "beta_a_V": 0.07152580711432106,
+        "beta_c_V": 0.5999999999999995,
+        "log10_ilim_over_icorr": 0.005000000000091,
+        "Ru_ohm_cm2": 794.3914502148232
+      },
+      "standard_errors": {
+        "Ecorr_V": 8.145744833995705e-06,
+        "log10_icorr": 0.019841328152554277,
+        "beta_a_V": 0.0022748715260240042,
+        "beta_c_V": 14.612189385931956,
+        "log10_ilim_over_icorr": 0.04688687635880014,
+        "Ru_ohm_cm2": 6.592361091821618
+      },
+      "aicc": {
+        "activation": 11792.415877299814,
+        "diffusion": 561.5183877744212
+      },
+      "n": 501
+    }
+  }
+}
