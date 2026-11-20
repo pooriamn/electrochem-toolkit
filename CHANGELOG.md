@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.5.0
 
 - `flowbattery` is now chemistry-agnostic. A `Chemistry` object holds the formal potential, rate constants, membrane diffusivities and crossover rules; `VANADIUM` is the built-in preset and `lost_crossover()` covers two-element systems. `Electrolyte.vanadium_mol_m3` is renamed `active_mol_m3`. Study results are unchanged.
 
