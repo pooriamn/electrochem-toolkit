@@ -1,0 +1,64 @@
+{
+  "truth": {
+    "slope_mV": 118.318699371443,
+    "j0_A_cm2": 5e-06,
+    "Ru_ohm_cm2": 2.0,
+    "j_capacitive_A_cm2": -5e-06
+  },
+  "estimates": {
+    "raw, 10\u201350 mA cm\u207b\u00b2": {
+      "slope_mV": 232.44903287990536,
+      "j0_A_cm2": 0.00018933562292917287,
+      "r_squared": 0.9892003112962051
+    },
+    "raw, 1\u201310 mA cm\u207b\u00b2": {
+      "slope_mV": 135.62597317947322,
+      "j0_A_cm2": 9.976728291871518e-06,
+      "r_squared": 0.9984586540570024
+    },
+    "85 % iR compensated": {
+      "slope_mV": 121.14773811110686,
+      "j0_A_cm2": 5.693464176692312e-06,
+      "r_squared": 0.9997879002857272
+    },
+    "iR corrected, Ru 5 % high": {
+      "slope_mV": 117.93794179910091,
+      "j0_A_cm2": 4.940153310301492e-06,
+      "r_squared": 0.9997443070461193
+    },
+    "Tafel slope plot plateau": {
+      "slope_mV": 118.47361265071234,
+      "j0_A_cm2": null,
+      "r_squared": null
+    },
+    "Butler\u2013Volmer fit, Ru free": {
+      "slope_mV": 118.4171458313324,
+      "j0_A_cm2": 5.020818059200968e-06,
+      "r_squared": null
+    }
+  },
+  "tafel_plot_plateau_log10_j": [
+    -3.841624738245891,
+    -1.846172159970364
+  ],
+  "bv_fit": {
+    "parameters": {
+      "log10_j0": -5.299225515992053,
+      "alpha_c": 0.4995843234558717,
+      "Ru_ohm_cm2": 1.9932913672304313,
+      "j_capacitive_A_cm2": -5.0185690295715235e-06,
+      "tafel_slope_mV": 118.4171458313324
+    },
+    "standard_errors": {
+      "log10_j0": 0.0007920942299506107,
+      "alpha_c": 0.00017965098286726417,
+      "Ru_ohm_cm2": 0.0028061711282998418,
+      "j_capacitive_A_cm2": 2.3338103531122662e-08,
+      "tafel_slope_mV": 0.04258291471152243
+    },
+    "weighted_rss": 713.518624576518,
+    "n": 751
+  },
+  "raw_windows_within_5_percent": 219,
+  "raw_windows_total": 702
+}
