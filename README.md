@@ -7,6 +7,7 @@
 ![Python](https://img.shields.io/badge/python-3.10%20%7C%203.12%20%7C%203.13-0B7A75)
 ![Core dependencies](https://img.shields.io/badge/core%20dependencies-none-0B7A75)
 [![Licence: MIT](https://img.shields.io/badge/licence-MIT-34508A)](LICENSE)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24407002.svg)](https://doi.org/10.5281/zenodo.24407002)
 
 Most electrochemistry labs run on a handful of calculations that get rewritten in every new spreadsheet: fit an impedance spectrum, balance a stack, integrate a test file. This repository is where I keep my versions of them, written as a small Python package, with the equations and assumptions stated and a test for each result that matters.
 
@@ -117,6 +118,6 @@ Everything here runs on synthetic data, and the models are as simple as the ques
 
 ## Contributing and citing
 
-Bug reports with a reproducer are the most useful thing you can send; see [CONTRIBUTING.md](CONTRIBUTING.md). If the toolkit helps your work, the citation details are in [CITATION.cff](CITATION.cff) (GitHub's "Cite this repository" button uses it).
+Bug reports with a reproducer are the most useful thing you can send; see [CONTRIBUTING.md](CONTRIBUTING.md). If the toolkit helps your work, please cite it. Every release is archived on Zenodo, and [doi:10.5281/zenodo.24407002](https://doi.org/10.5281/zenodo.24407002) always points to the latest version. The full details are in [CITATION.cff](CITATION.cff), which GitHub's "Cite this repository" button uses.
 
 MIT licensed. Written by [Pooria Moozarm Nia](https://github.com/pooriamn), electrochemist in London ([Google Scholar](https://scholar.google.com/citations?user=SaiB5-8AAAAJ), [ORCID](https://orcid.org/0000-0002-3049-3120)).
