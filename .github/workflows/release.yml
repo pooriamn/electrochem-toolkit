@@ -1,4 +1,4 @@
-name: Publish toolkit release
+name: Release
 on:
   push:
     branches: [main]
@@ -40,8 +40,27 @@ jobs:
           set -eu
           version=$(python -c 'import tomllib; print(tomllib.load(open("pyproject.toml","rb"))["project"]["version"])')
           tag="v$version"
+          # Release notes are the changelog section for this version only.
+          awk -v v="## $version" '$0==v{on=1;next} /^## /{on=0} on' CHANGELOG.md > notes.md
           if gh release view "$tag" >/dev/null 2>&1; then
             echo "Release already exists; leaving it unchanged."
             exit 0
           fi
-          gh release create "$tag" dist/* --target "$GITHUB_SHA" --title "Electrochemical Engineering Toolkit $tag" --notes-file CHANGELOG.md
+          gh release create "$tag" dist/* --target "$GITHUB_SHA" --title "Electrochemical Engineering Toolkit $tag" --notes-file notes.md
+  pypi:
+    # Enable once a PyPI trusted publisher is configured for this repository
+    # (repository variable PUBLISH_TO_PYPI = true).
+    needs: verify
+    if: github.ref == 'refs/heads/main' && vars.PUBLISH_TO_PYPI == 'true'
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: toolkit-distributions
+          path: dist
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          skip-existing: true

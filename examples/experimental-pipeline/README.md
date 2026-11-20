@@ -9,7 +9,7 @@ A surprising amount of experimental work still involves opening spreadsheets, ch
 From the repository root:
 
 ```sh
-python projects/experimental-pipeline/pipeline.py projects/experimental-pipeline/sample.csv summary.json
+python examples/experimental-pipeline/pipeline.py examples/experimental-pipeline/sample.csv summary.json
 ```
 
 The input is a synthetic measurement file with three columns: time in seconds, voltage in volts and current in amperes. The script checks the header and values, calculates power at each sample, independently integrates electrical energy and charge, and writes a JSON report. It returns energy in Wh, charge in Ah, and mean current in A.

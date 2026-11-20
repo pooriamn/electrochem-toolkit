@@ -6,4 +6,4 @@ The toolkit keeps numerical functions in an importable package, with a thin comm
 
 The next step would be to add more representative reference datasets and assess uncertainty, rather than simply adding more interfaces. A clean architecture is only useful if the calculation itself is sound.
 
-[Toolkit](../toolkit/README.md)
+[Toolkit](../README.md)

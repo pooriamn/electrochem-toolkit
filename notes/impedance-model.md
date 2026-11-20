@@ -6,4 +6,4 @@ That gives several independent checks before looking at a fit residual. The grid
 
 In a more realistic fitting tool I would want residuals by frequency, parameter bounds, uncertainty estimates and a clear indication when parameters are poorly identified. A convincing fit is not the same thing as a convincing physical model.
 
-[Example](../projects/electrochemical-analysis/README.md)
+[Example](../examples/electrochemical-analysis/README.md)

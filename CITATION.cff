@@ -1,10 +1,20 @@
 cff-version: 1.2.0
-message: "If you use these examples, please cite this software."
+message: "If this toolkit helps your work, please cite it."
 title: "Electrochemical Engineering Toolkit"
+abstract: "Python tools for electrochemical engineering: impedance inverse modelling with model selection and parameter uncertainty, electrolyser stack and electrothermal simulation, and validated processing of measurement files."
 type: software
 authors:
   - family-names: "Moozarm Nia"
     given-names: "Pooria"
-version: "0.2.0"
-repository-code: "https://github.com/pooriamn/pooriamn"
+    orcid: "https://orcid.org/0000-0002-3049-3120"
+version: "0.4.0"
+date-released: "2026-11-20"
+repository-code: "https://github.com/pooriamn/electrochem-toolkit"
+url: "https://pooriamn.github.io/electrochem-toolkit/"
 license: MIT
+keywords:
+  - electrochemistry
+  - electrochemical impedance spectroscopy
+  - water electrolysis
+  - hydrogen
+  - scientific computing

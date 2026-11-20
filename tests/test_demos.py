@@ -11,9 +11,9 @@ def load(name, relative_path):
     spec.loader.exec_module(module)
     return module
 
-eis = load("impedance", "projects/electrochemical-analysis/impedance.py")
-stack = load("stack", "projects/electrolyser-calculator/stack.py")
-pipeline = load("pipeline", "projects/experimental-pipeline/pipeline.py")
+eis = load("impedance", "examples/electrochemical-analysis/impedance.py")
+stack = load("stack", "examples/electrolyser-calculator/stack.py")
+pipeline = load("pipeline", "examples/experimental-pipeline/pipeline.py")
 
 class ImpedanceTests(unittest.TestCase):
     def test_limits(self):

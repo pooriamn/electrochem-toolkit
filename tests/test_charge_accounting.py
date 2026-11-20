@@ -9,7 +9,7 @@ from electrochem_toolkit import pipeline as toolkit_pipeline
 ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location(
     "standalone_experiment_pipeline",
-    ROOT / "projects" / "experimental-pipeline" / "pipeline.py",
+    ROOT / "examples" / "experimental-pipeline" / "pipeline.py",
 )
 standalone_pipeline = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(standalone_pipeline)

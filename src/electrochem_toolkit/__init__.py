@@ -1,2 +1,2 @@
-"""Independent electrochemical engineering tools."""
-__version__ = "0.2.0"
+"""Electrochemical engineering calculations you can check."""
+__version__ = "0.4.0"

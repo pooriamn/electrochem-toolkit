@@ -9,7 +9,7 @@ A quick stack balance is often useful before starting a more detailed model. Giv
 From the repository root:
 
 ```sh
-python projects/electrolyser-calculator/stack.py --cells 10 --area 100 --current-density 0.3 --voltage 1.8
+python examples/electrolyser-calculator/stack.py --cells 10 --area 100 --current-density 0.3 --voltage 1.8
 ```
 
 The example uses ten identical cells, 100 cm² of active area per cell, 0.3 A/cm² and 1.8 V per cell. Faradaic efficiency defaults to 100%; use `--efficiency 0.95` to specify 95%.

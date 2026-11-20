@@ -6,4 +6,4 @@ The public CSV example checks the schema and numerical values before writing any
 
 The important test is not just whether a valid file produces a result. It is whether an invalid file leaves the last good result intact.
 
-[Example](../projects/experimental-pipeline/README.md)
+[Example](../examples/experimental-pipeline/README.md)

@@ -6,4 +6,4 @@ The number of cells changes total power and hydrogen output but cancels out of s
 
 Real system energy consumption also includes conversion losses and auxiliary loads. A DC number is not a system efficiency figure, and a fixed cell voltage is an input rather than a prediction of performance.
 
-[Example](../projects/electrolyser-calculator/README.md)
+[Example](../examples/electrolyser-calculator/README.md)

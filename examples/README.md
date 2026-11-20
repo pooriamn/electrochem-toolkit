@@ -1,6 +1,6 @@
 # Run the examples
 
-The three projects here are small enough to read in one sitting. Each solves a different part of a typical engineering workflow, from interpreting impedance data to calculating stack performance or processing a measurement file.
+The three examples here are small enough to read in one sitting. Each solves a different part of a typical engineering workflow, from interpreting impedance data to calculating stack performance or processing a measurement file.
 
 | Example | Start here |
 | --- | --- |
@@ -16,6 +16,6 @@ From the repository root, run the tests with:
 python -m unittest discover -s tests -v
 ```
 
-The same suite runs in [GitHub Actions](https://github.com/pooriamn/pooriamn/actions/workflows/verify.yml).
+The same suite runs in [GitHub Actions](https://github.com/pooriamn/electrochem-toolkit/actions/workflows/verify.yml).
 
 These are educational examples, not production software. They use synthetic inputs and are not intended for equipment control, safety limits or engineering sign-off.

@@ -9,7 +9,7 @@ When interpreting an impedance spectrum, I like to start with the simplest circu
 From the repository root:
 
 ```sh
-python projects/electrochemical-analysis/impedance.py
+python examples/electrochemical-analysis/impedance.py
 ```
 
 The script generates a noise-free synthetic spectrum, fits it with a bounded grid search and prints the recovered values of Rs, Rct and C alongside the mean squared complex residual.
