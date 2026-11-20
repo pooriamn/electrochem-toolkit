@@ -214,13 +214,13 @@ footer nav{display:flex;gap:18px;flex-wrap:wrap}
   </article>
 
   <article class="study">
-    <figure><img src="assets/flow-battery-results.svg" alt="Charge and discharge curves at three flow rates, efficiency against flow rate, capacity fade with a remix at cycle 80, and vanadium imbalance between tanks" loading="lazy" width="1050" height="740"></figure>
+    <figure><img src="assets/flow-battery-results.svg" alt="Charge and discharge curves at three flow rates, efficiency against flow rate, capacity fade with a remix at cycle 80, and electrolyte imbalance between tanks" loading="lazy" width="1050" height="740"></figure>
     <div>
       <h3>How hard should a flow battery pump?</h3>
-      <p>A vanadium flow cell with four-species membrane crossover, single-pass mass transfer and Darcy pumping losses, cycled between voltage limits for 120 cycles.</p>
+      <p>A flow battery cell with single-pass mass transfer, Darcy pumping losses and chemistry-specific membrane crossover, cycled for 120 cycles. The chemistry plugs in; the worked example is all-vanadium.</p>
       <ul class="findings">
         <li><b>115 mL/min</b><span>Flow giving the most net energy per cycle. Stack efficiency alone barely notices flow rate.</span></li>
-        <li><b>0.11 %</b><span>Capacity lost per cycle to crossover, all of it recovered by remixing the tanks.</span></li>
+        <li><b>0.11 %</b><span>Capacity lost per cycle to crossover in the vanadium example, all of it recovered by remixing the tanks.</span></li>
         <li><b>3.45 → 3.26 Ah</b><span>With 0.2 % hydrogen evolution, remixing lowers capacity: the oxidation state needs correcting too.</span></li>
       </ul>
       <a href="https://github.com/pooriamn/electrochem-toolkit/tree/main/studies/flow-battery">Model and results</a>
@@ -301,7 +301,7 @@ footer nav{display:flex;gap:18px;flex-wrap:wrap}
       <dt>inverse</dt><dd>Weighted complex least squares for RC and RQ, AICc, local uncertainty</dd>
       <dt>stack</dt><dd>Series stack DC balance, Faradaic hydrogen rate, specific energy</dd>
       <dt>electrothermal</dt><dd>Dynamic stack model with kinetics, ohmic losses and heat balance</dd>
-      <dt>flowbattery</dt><dd>Vanadium flow cell: crossover, mass transfer, pumping, remixing</dd>
+      <dt>flowbattery</dt><dd>Flow battery with pluggable chemistry: crossover, mass transfer, pumping, remixing</dd>
       <dt>corrosion</dt><dd>Mixed-potential curves, Tafel extrapolation, LPR, full-curve fit, ASTM G102</dd>
       <dt>kinetics</dt><dd>Butler–Volmer sweeps, Tafel slope plots, window analysis</dd>
       <dt>polarisation</dt><dd>Tafel regression over a region you choose</dd>

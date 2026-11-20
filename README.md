@@ -37,11 +37,11 @@ Above the thermoneutral voltage (shaded) the stack heats; below it, it cools. Ov
 
 ### How hard should a flow battery pump?
 
-A lumped vanadium flow cell with four-species membrane crossover, single-pass mass transfer and Darcy pumping losses, cycled between voltage limits for 120 cycles.
+A lumped flow battery model with single-pass mass transfer, Darcy pumping losses and chemistry-specific membrane crossover, cycled between voltage limits for 120 cycles. The chemistry is a plug-in; the worked example is all-vanadium.
 
-<img alt="Four panels: charge and discharge curves at three flow rates, efficiency and utilisation against flow rate, capacity fade over 120 cycles with a remix at cycle 80, and vanadium imbalance between tanks" src="https://raw.githubusercontent.com/pooriamn/electrochem-toolkit/main/studies/flow-battery/results.svg">
+<img alt="Four panels: charge and discharge curves at three flow rates, efficiency and utilisation against flow rate, capacity fade over 120 cycles with a remix at cycle 80, and electrolyte imbalance between tanks" src="https://raw.githubusercontent.com/pooriamn/electrochem-toolkit/main/studies/flow-battery/results.svg">
 
-Net energy per cycle peaks near 115 mL/min, even though stack efficiency barely changes with flow. Crossover costs 0.11 % capacity per cycle and remixing gets all of it back. With 0.2 % hydrogen evolution added, remixing makes capacity *worse*, because the oxidation-state drift needs fixing as well. [Model and results →](studies/flow-battery/README.md)
+Net energy per cycle peaks near 115 mL/min, even though stack efficiency barely changes with flow. In the all-vanadium example, crossover costs 0.11 % capacity per cycle and remixing gets all of it back. With 0.2 % hydrogen evolution added, remixing makes capacity *worse*, because the oxidation-state drift needs fixing as well. [Model and results →](studies/flow-battery/README.md)
 
 ### When can you trust a corrosion rate?
 
@@ -103,7 +103,7 @@ python studies/tafel-analysis/run.py
 | `inverse` | Weighted complex least squares for RC/RQ circuits, analytic Jacobian, AICc, local uncertainty |
 | `stack` | Series stack DC balance, Faradaic hydrogen rate, specific energy |
 | `electrothermal` | Dynamic stack model with thermodynamics, kinetics, ohmic losses and heat balance |
-| `flowbattery` | Vanadium flow cell with crossover, mass transfer, pumping and remixing |
+| `flowbattery` | Flow battery cell with pluggable chemistry: crossover, mass transfer, pumping, remixing (all-vanadium preset) |
 | `corrosion` | Mixed-potential polarisation curves, Tafel extrapolation, LPR, full-curve fit, ASTM G102 rates |
 | `kinetics` | Butler–Volmer sweeps with ohmic drop, Tafel slope plots, window analysis, full-curve fit |
 | `polarisation` | Tafel regression over a region you choose |

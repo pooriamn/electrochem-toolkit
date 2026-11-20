@@ -6,7 +6,7 @@ Each study asks one practical question and answers it on synthetic data with a k
 | --- | --- | --- |
 | [Impedance inverse modelling](eis-inverse/README.md) | Ideal capacitor or constant-phase element? | Weighted complex least squares, analytic Jacobian, multistart, AICc, local uncertainty |
 | [Electrolyser electrothermal model](electrothermal-stack/README.md) | Where does the heat go in a stack under a changing load? | Thermodynamics, apparent Butler–Volmer kinetics, Arrhenius resistance, ODE integration, energy closure |
-| [Vanadium flow battery](flow-battery/README.md) | How much electrolyte to pump, and what does remixing recover? | Four-species crossover model, single-pass mass transfer, Darcy pumping, voltage-event cycling |
+| [Flow battery](flow-battery/README.md) | How much electrolyte to pump, and what does remixing recover? | Pluggable chemistry, membrane crossover, single-pass mass transfer, Darcy pumping, voltage-event cycling; all-vanadium worked example |
 | [Corrosion rate from a polarisation scan](corrosion/README.md) | When can Tafel extrapolation and LPR be trusted? | Mixed-potential theory, implicit ohmic drop, Stern–Geary, model selection by AICc, ASTM G102 |
 | [Tafel analysis](tafel-analysis/README.md) | How much do iR correction and window choice move a Tafel slope? | Butler–Volmer with R_u and charging current, Tafel slope plot, window-error map, full-curve fit |
 

@@ -1,4 +1,9 @@
-"""Vanadium flow battery: flow rate, pumping power and crossover-driven capacity fade."""
+"""Flow battery: flow rate, pumping power and crossover-driven capacity fade.
+
+The cell, flow and pumping parts apply to any two-couple flow battery. The
+worked example uses the all-vanadium chemistry (fb.VANADIUM); swap in another
+fb.Chemistry to run the same study on a different system.
+"""
 import json
 from pathlib import Path
 import numpy as np
@@ -32,20 +37,20 @@ def long_run(cell, el, h2):
     rows = []
     for k in range(1, CYCLES + 1):
         if k == REMIX_AT + 1:
-            state = fb.remix(state)
+            state = fb.remix(state, cell.chemistry)
         _, dis, m = fb.cycle(cell, el, state, CURRENT_A, NOMINAL_U, h2_fraction=h2)
         state = dis["state"]
         rows.append({"cycle": k, "capacity_Ah": m["discharge_capacity_Ah"],
                      "coulombic_efficiency": m["coulombic_efficiency"],
                      "negative_share": float(state[:2].sum() / state.sum()),
-                     "aos": fb.average_oxidation_state(state)})
+                     "aos": fb.average_oxidation_state(state, cell.chemistry)})
     return rows
 
 
 def main():
     out = Path("study-output/flow-battery"); out.mkdir(parents=True, exist_ok=True)
-    cell, el = fb.FlowCell(), fb.Electrolyte()
-    theoretical_Ah = el.volume_m3 * el.vanadium_mol_m3 * fb.F / 3600
+    cell, el = fb.FlowCell(chemistry=fb.VANADIUM), fb.Electrolyte()
+    theoretical_Ah = el.volume_m3 * el.active_mol_m3 * fb.F / 3600
 
     curves = {u: settled_cycle(cell, el, u) for u in (2e-3, NOMINAL_U, 2e-2)}
     sweep_u = np.geomspace(1.2e-3, 3e-2, 15)
@@ -65,6 +70,7 @@ def main():
         "nominal": {"flow_mL_min": ml_min(cell, NOMINAL_U), **{k: float(v) for k, v in nominal.items()}},
         "best_net_energy_flow_mL_min": best["flow_mL_min"],
         "theoretical_capacity_Ah": theoretical_Ah,
+        "chemistry": cell.chemistry.name,
     }
     for name, rows in runs.items():
         before = rows[REMIX_AT - 1]["capacity_Ah"]
@@ -123,9 +129,9 @@ def main():
     h2 = runs["crossover + 0.2 % H2"][REMIX_AT - 1]["aos"]
     ax.text(0.03, 0.06, f"average oxidation state before remixing\ncrossover only 3.50, with H₂ {h2:.2f}",
             transform=ax.transAxes, fontsize=8.5, color=plotstyle.INK)
-    ax.set(xlabel="cycle", ylabel="vanadium in negative tank / %", title="Where the vanadium went")
+    ax.set(xlabel="cycle", ylabel="active species in negative tank / %", title="Where the electrolyte went")
     for ax, l in zip(axes.flat, "abcd"): plotstyle.panel_label(ax, l)
-    fig.suptitle("Vanadium flow cell at 100 mA cm⁻²: flow, pumping and crossover", x=.01, ha="left", fontsize=13, fontweight="semibold")
+    fig.suptitle("Flow battery at 100 mA cm⁻²: flow, pumping and crossover (all-vanadium example)", x=.01, ha="left", fontsize=13, fontweight="semibold")
     fig.savefig(out / "results.svg", metadata={"Date": None})
     return summary
 

@@ -11,13 +11,14 @@
   },
   "best_net_energy_flow_mL_min": 114.4220262770666,
   "theoretical_capacity_Ah": 4.288236983111111,
+  "chemistry": "all-vanadium",
   "crossover only": {
     "cycle1_Ah": 3.6254693412221055,
-    "cycle80_Ah": 3.307386952349293,
-    "fade_percent_per_cycle": 0.11105760313678922,
-    "after_remix_Ah": 3.6255945103747758,
-    "aos_before_remix": 3.5000000000000013,
-    "negative_share_before_remix": 0.4688615188980152
+    "cycle80_Ah": 3.3073869523492903,
+    "fade_percent_per_cycle": 0.11105760313679022,
+    "after_remix_Ah": 3.625594510374773,
+    "aos_before_remix": 3.500000000000001,
+    "negative_share_before_remix": 0.46886151889801553
   },
   "crossover + 0.2 % H2": {
     "cycle1_Ah": 3.626550439418368,

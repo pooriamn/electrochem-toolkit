@@ -13,16 +13,16 @@ class FlowBatteryTests(unittest.TestCase):
         self.el = fb.Electrolyte()
 
     def test_ocv_is_formal_potential_at_half_charge(self):
-        n = self.el.volume_m3 * self.el.vanadium_mol_m3 / 2
+        n = self.el.volume_m3 * self.el.active_mol_m3 / 2
         v, _ = fb.cell_voltage(self.cell, [n, n, n, n], self.el.volume_m3, 0.0, 5e-3)
-        self.assertAlmostEqual(v, self.cell.formal_potential_V, places=12)
+        self.assertAlmostEqual(v, self.cell.chemistry.formal_potential_V, places=12)
 
     def test_nernst_slope(self):
         # Both half-cells at the same SOC: E = E0' + 2RT/F ln(s/(1-s)).
-        n, s = self.el.volume_m3 * self.el.vanadium_mol_m3, 0.8
+        n, s = self.el.volume_m3 * self.el.active_mol_m3, 0.8
         state = [s * n, (1 - s) * n, (1 - s) * n, s * n]
         v, _ = fb.cell_voltage(self.cell, state, self.el.volume_m3, 0.0, 5e-3)
-        expected = self.cell.formal_potential_V + 2 * fb.R * 298.15 / fb.F * math.log(s / (1 - s))
+        expected = self.cell.chemistry.formal_potential_V + 2 * fb.R * 298.15 / fb.F * math.log(s / (1 - s))
         self.assertAlmostEqual(v, expected, places=12)
 
     def test_crossover_conserves_vanadium_and_electrons(self):
@@ -32,7 +32,7 @@ class FlowBatteryTests(unittest.TestCase):
         self.assertAlmostEqual(np.dot([2, 3, 4, 5], rates), 0.0, places=18)
 
     def test_charge_counting_without_crossover(self):
-        cell = replace(self.cell, diffusivity_m2_s=(0, 0, 0, 0))
+        cell = replace(self.cell, chemistry=replace(fb.VANADIUM, diffusivity_m2_s=(0, 0, 0, 0)))
         start = self.el.initial_state()
         ch = fb.half_cycle(cell, self.el, start, 10.0, 5e-3, 1.65)
         moved = ch["state"][0] - start[0]
@@ -40,7 +40,7 @@ class FlowBatteryTests(unittest.TestCase):
         self.assertAlmostEqual(ch["V"][-1], 1.65, places=3)
 
     def test_no_crossover_gives_unit_coulombic_efficiency(self):
-        cell = replace(self.cell, diffusivity_m2_s=(0, 0, 0, 0))
+        cell = replace(self.cell, chemistry=replace(fb.VANADIUM, diffusivity_m2_s=(0, 0, 0, 0)))
         # The first cycle starts below the discharge cut-off; the second starts and
         # ends on the same cut-off, so every coulomb in must come back out.
         _, dis, _ = fb.cycle(cell, self.el, self.el.initial_state(), 10.0, 5e-3)
@@ -50,14 +50,14 @@ class FlowBatteryTests(unittest.TestCase):
         self.assertLess(m["voltage_efficiency"], 1.0)
 
     def test_crossover_lowers_coulombic_efficiency(self):
-        cell0 = replace(self.cell, diffusivity_m2_s=(0, 0, 0, 0))
+        cell0 = replace(self.cell, chemistry=replace(fb.VANADIUM, diffusivity_m2_s=(0, 0, 0, 0)))
         st = self.el.initial_state()
         ce0 = fb.cycle(cell0, self.el, st, 10.0, 5e-3)[2]["coulombic_efficiency"]
         ce1 = fb.cycle(self.cell, self.el, st, 10.0, 5e-3)[2]["coulombic_efficiency"]
         self.assertLess(ce1, ce0 - 0.02)
 
     def test_single_pass_supply_limit(self):
-        n = self.el.volume_m3 * self.el.vanadium_mol_m3
+        n = self.el.volume_m3 * self.el.active_mol_m3
         state = [0.5 * n, 0.5 * n, 0.5 * n, 0.5 * n]
         # Flow so low that one pass cannot carry the reactant the current needs.
         u = 10.0 / (fb.F * 800 * self.cell.flow_section_m2) * 0.5
@@ -87,6 +87,32 @@ class FlowBatteryTests(unittest.TestCase):
         self.assertAlmostEqual(mixed.sum(), state.sum(), places=12)
         self.assertAlmostEqual(np.dot([2, 3, 4, 5], mixed), np.dot([2, 3, 4, 5], state), places=12)
         self.assertAlmostEqual(mixed[:2].sum(), mixed[2:].sum(), places=12)
+
+    def test_lost_crossover_removes_material_without_side_reactions(self):
+        chem = replace(fb.VANADIUM, name="two-element example", crossover=fb.lost_crossover(), oxidation_states=None)
+        cell = replace(self.cell, chemistry=chem)
+        state = np.array([0.03, 0.05, 0.06, 0.02])
+        rates = fb.crossover_rates(cell, state, self.el.volume_m3)
+        c = state / self.el.volume_m3
+        flux = np.array(chem.diffusivity_m2_s) * cell.area_m2 * c / cell.membrane_thickness_m
+        np.testing.assert_allclose(rates, -flux, rtol=1e-12)
+        with self.assertRaises(ValueError):
+            fb.remix(state, chem)
+
+    def test_other_chemistry_runs_through_a_cycle(self):
+        # A made-up couple pair: lower potential, slower kinetics, lost crossover.
+        chem = fb.Chemistry(name="example", formal_potential_V=1.10, k_neg_m_s=5e-8, k_pos_m_s=5e-8,
+                            diffusivity_m2_s=(5e-12,) * 4, crossover=fb.lost_crossover())
+        cell = replace(self.cell, chemistry=chem)
+        _, _, m = fb.cycle(cell, self.el, self.el.initial_state(), 10.0, 5e-3, v_max=1.40, v_min=0.75)
+        self.assertGreater(m["discharge_capacity_Ah"], 0.5)
+        self.assertLess(m["coulombic_efficiency"], 1.0)
+
+    def test_chemistry_validation(self):
+        with self.assertRaises(ValueError):
+            replace(fb.VANADIUM, crossover=((0, 0, 0, 0),) * 4)
+        with self.assertRaises(ValueError):
+            replace(fb.VANADIUM, formal_potential_V=-1.0)
 
     def test_invalid_inputs(self):
         with self.assertRaises(ValueError):
