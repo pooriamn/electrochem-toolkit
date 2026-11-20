@@ -10,11 +10,13 @@
 
 Most electrochemistry labs run on a handful of calculations that get rewritten in every new spreadsheet: fit an impedance spectrum, balance a stack, integrate a test file. This repository is where I keep my versions of them, written as a small Python package, with the equations and assumptions stated and a test for each result that matters.
 
-There are two layers. The **core toolkit** has no dependencies beyond the standard library and covers the everyday work. The **computational studies** use NumPy and SciPy for the harder questions: whether an impedance model is actually supported by the data, and how voltage losses turn into heat in a stack under a changing load.
+There are two layers. The **core toolkit** has no dependencies beyond the standard library and covers the everyday work. The **computational studies** use NumPy and SciPy for the harder questions, the ones where a wrong answer looks perfectly reasonable: whether an impedance model is actually supported by the data, where the heat goes in an electrolyser stack, how hard to pump a flow battery, how far to trust a corrosion rate, and what a Tafel slope really measures.
 
 **[Try it in the browser](https://pooriamn.github.io/electrochem-toolkit/)**, no install needed.
 
 ## Studies
+
+Five so far. Each runs on synthetic data with a known answer, so the method is judged on whether it gets that answer back. [All studies →](studies/README.md)
 
 ### Ideal capacitor or constant-phase element?
 
@@ -31,6 +33,30 @@ A lumped electrothermal model couples Nernst-corrected reversible voltage, appar
 <img alt="Four panels: step current profile, stack temperature rising to 45 °C, cell voltage relative to thermoneutral and reversible voltage, and cumulative energy balance" src="https://raw.githubusercontent.com/pooriamn/electrochem-toolkit/main/studies/electrothermal-stack/results.svg">
 
 Above the thermoneutral voltage (shaded) the stack heats; below it, it cools. Over the 55-minute run the balance closes to within 10⁻⁸ J. [Equations and numerical checks →](studies/electrothermal-stack/README.md)
+
+### How hard should a flow battery pump?
+
+A lumped vanadium flow cell with four-species membrane crossover, single-pass mass transfer and Darcy pumping losses, cycled between voltage limits for 120 cycles.
+
+<img alt="Four panels: charge and discharge curves at three flow rates, efficiency and utilisation against flow rate, capacity fade over 120 cycles with a remix at cycle 80, and vanadium imbalance between tanks" src="https://raw.githubusercontent.com/pooriamn/electrochem-toolkit/main/studies/flow-battery/results.svg">
+
+Net energy per cycle peaks near 115 mL/min, even though stack efficiency barely changes with flow. Crossover costs 0.11 % capacity per cycle and remixing gets all of it back. With 0.2 % hydrogen evolution added, remixing makes capacity *worse*, because the oxidation-state drift needs fixing as well. [Model and results →](studies/flow-battery/README.md)
+
+### When can you trust a corrosion rate?
+
+Tafel extrapolation, linear polarisation resistance and a full mixed-potential fit, run on synthetic carbon-steel scans where the true corrosion current is known: deaerated acid, aerated chloride, and aerated chloride with an 800 Ω cm² ohmic drop.
+
+<img alt="Four panels: polarisation curves with Tafel extrapolation for activation- and diffusion-controlled cases, linear polarisation plots with and without ohmic drop, and the ratio of estimated to true corrosion current for each method" src="https://raw.githubusercontent.com/pooriamn/electrochem-toolkit/main/studies/corrosion/results.svg">
+
+LPR with the default B = 26 mV ranges from 49 % to 152 % of the true rate across the three cases. The mixed-potential fit stays within 3 % in all of them and recovers the ohmic resistance as well. [Methods and limits →](studies/corrosion/README.md)
+
+### What does a Tafel slope actually measure?
+
+One hydrogen evolution sweep with ohmic drop, charging current and noise, analysed six ways, from a straight line through raw data to a Butler–Volmer fit of the whole curve.
+
+<img alt="Four panels: Tafel plot raw and iR corrected, local Tafel slope plot, map of slope error against fitting window, and the slope reported by each method" src="https://raw.githubusercontent.com/pooriamn/electrochem-toolkit/main/studies/tafel-analysis/results.svg">
+
+The true slope is 118 mV/dec. A straight line through the uncorrected 10–50 mA cm⁻² region gives 232 mV/dec with R² = 0.989. The Tafel slope plot and the full fit both land within 0.5 %. [What to report instead →](studies/tafel-analysis/README.md)
 
 ## Quick start
 
@@ -63,6 +89,9 @@ For the studies, install the optional extras and run them from a clone:
 python -m pip install ".[advanced]"
 python studies/eis-inverse/run.py
 python studies/electrothermal-stack/run.py
+python studies/flow-battery/run.py
+python studies/corrosion/run.py
+python studies/tafel-analysis/run.py
 ```
 
 ## What's in the package
@@ -73,6 +102,9 @@ python studies/electrothermal-stack/run.py
 | `inverse` | Weighted complex least squares for RC/RQ circuits, analytic Jacobian, AICc, local uncertainty |
 | `stack` | Series stack DC balance, Faradaic hydrogen rate, specific energy |
 | `electrothermal` | Dynamic stack model with thermodynamics, kinetics, ohmic losses and heat balance |
+| `flowbattery` | Vanadium flow cell with crossover, mass transfer, pumping and remixing |
+| `corrosion` | Mixed-potential polarisation curves, Tafel extrapolation, LPR, full-curve fit, ASTM G102 rates |
+| `kinetics` | Butler–Volmer sweeps with ohmic drop, Tafel slope plots, window analysis, full-curve fit |
 | `polarisation` | Tafel regression over a region you choose |
 | `battery` | Charge and discharge throughput from signed current, split at zero crossings |
 | `pipeline` | CSV validation, energy and charge integration, atomic JSON reports with a source hash |

@@ -2,6 +2,10 @@
 
 ## 0.4.0
 
+- Three new studies, each with a model module, run script, figure and tests:
+  - `flowbattery`: vanadium flow cell with four-species crossover (Tang, Bao and Skyllas-Kazacos 2011), single-pass mass transfer, Darcy pumping, voltage-event cycling and tank remixing.
+  - `corrosion`: mixed-potential polarisation curves with implicit ohmic drop; Tafel extrapolation, LPR with Stern–Geary, a full-curve fit with AICc model selection, and ASTM G102 corrosion rates.
+  - `kinetics`: Butler–Volmer sweeps with ohmic drop and charging current, Tafel slope plots, window-error maps and a full-curve fit.
 - Moved the toolkit out of my profile repository into its own home, `pooriamn/electrochem-toolkit`. History is preserved.
 - Renamed `projects/` to `examples/` and `journal/` to `notes/`; the package README is now the repository README.
 - Redrew both study figures with a shared style (`electrochem_toolkit.plotstyle`): panel letters, ±2σ residual band, ΔAICc and α on the EIS figure, thermoneutral shading and energy-closure note on the electrothermal figure. Numerical results are unchanged.

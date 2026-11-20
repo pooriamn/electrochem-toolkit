@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "electrochemical-engineering-toolkit"
 version = "0.4.0"
-description = "Electrochemical engineering calculations you can check: impedance fitting, electrolyser stack balances, electrothermal simulation and validated measurement reports."
+description = "Electrochemical engineering calculations you can check: impedance fitting, electrolyser and flow battery models, corrosion and Tafel analysis, and validated measurement reports."
 readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "MIT"}
@@ -13,7 +13,8 @@ authors = [{name = "Pooria Moozarm Nia"}]
 keywords = [
   "electrochemistry", "electrochemical-impedance-spectroscopy", "eis",
   "water-electrolysis", "hydrogen", "electrolyser", "battery",
-  "equivalent-circuit", "scientific-computing",
+  "equivalent-circuit", "redox-flow-battery", "corrosion", "tafel",
+  "scientific-computing",
 ]
 classifiers = [
   "Development Status :: 4 - Beta",

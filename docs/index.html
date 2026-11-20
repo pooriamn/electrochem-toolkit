@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Electrochemical Engineering Toolkit | Pooria Moozarm Nia</title>
-<meta name="description" content="Python tools for electrochemical engineering: impedance inverse modelling, electrolyser stack and electrothermal simulation, and validated measurement reports. Try the calculations in your browser.">
+<meta name="description" content="Python tools for electrochemical engineering: impedance inverse modelling, electrolyser and flow battery models, corrosion-rate and Tafel analysis, and validated measurement reports. Try the calculations in your browser.">
 <link rel="canonical" href="https://pooriamn.github.io/electrochem-toolkit/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Electrochemical Engineering Toolkit">
@@ -181,7 +181,7 @@ footer nav{display:flex;gap:18px;flex-wrap:wrap}
 
 <section id="studies">
   <div class="sec-head">
-    <h2>Two studies</h2>
+    <h2>Five studies</h2>
     <p>Each one starts from synthetic data with known answers, so the method can be judged on whether it gets them back. The code, assumptions and tests are all in the repository.</p>
   </div>
 
@@ -210,6 +210,48 @@ footer nav{display:flex;gap:18px;flex-wrap:wrap}
         <li><b>10⁻⁸ J</b><span>Largest energy-balance residual over the run, from energies integrated as ODE states.</span></li>
       </ul>
       <a href="https://github.com/pooriamn/electrochem-toolkit/tree/main/studies/electrothermal-stack">Equations and checks</a>
+    </div>
+  </article>
+
+  <article class="study">
+    <figure><img src="assets/flow-battery-results.svg" alt="Charge and discharge curves at three flow rates, efficiency against flow rate, capacity fade with a remix at cycle 80, and vanadium imbalance between tanks" loading="lazy" width="1050" height="740"></figure>
+    <div>
+      <h3>How hard should a flow battery pump?</h3>
+      <p>A vanadium flow cell with four-species membrane crossover, single-pass mass transfer and Darcy pumping losses, cycled between voltage limits for 120 cycles.</p>
+      <ul class="findings">
+        <li><b>115 mL/min</b><span>Flow giving the most net energy per cycle. Stack efficiency alone barely notices flow rate.</span></li>
+        <li><b>0.11 %</b><span>Capacity lost per cycle to crossover, all of it recovered by remixing the tanks.</span></li>
+        <li><b>3.45 → 3.26 Ah</b><span>With 0.2 % hydrogen evolution, remixing lowers capacity: the oxidation state needs correcting too.</span></li>
+      </ul>
+      <a href="https://github.com/pooriamn/electrochem-toolkit/tree/main/studies/flow-battery">Model and results</a>
+    </div>
+  </article>
+
+  <article class="study flip">
+    <figure><img src="assets/corrosion-results.svg" alt="Polarisation curves with Tafel extrapolation, linear polarisation plots with and without ohmic drop, and estimated over true corrosion current for each method" loading="lazy" width="1050" height="760"></figure>
+    <div>
+      <h3>When can you trust a corrosion rate?</h3>
+      <p>Tafel extrapolation, linear polarisation resistance and a full mixed-potential fit on carbon-steel scans with a known answer, in acid, in aerated chloride, and with an ohmic drop.</p>
+      <ul class="findings">
+        <li><b>49–152 %</b><span>Range of LPR results with the default B = 26 mV across the three cases.</span></li>
+        <li><b>0.81</b><span>Tafel extrapolation when oxygen reduction is diffusion limited. The 1.28 V/dec "slope" is the giveaway.</span></li>
+        <li><b>±3 %</b><span>Mixed-potential fit in every case, with the ohmic resistance recovered as 794 against 800 Ω cm².</span></li>
+      </ul>
+      <a href="https://github.com/pooriamn/electrochem-toolkit/tree/main/studies/corrosion">Methods and limits</a>
+    </div>
+  </article>
+
+  <article class="study">
+    <figure><img src="assets/tafel-results.svg" alt="Tafel plot raw and iR corrected, local Tafel slope plot, slope error against fitting window, and the slope reported by six methods" loading="lazy" width="1050" height="760"></figure>
+    <div>
+      <h3>What does a Tafel slope measure?</h3>
+      <p>One hydrogen evolution sweep with ohmic drop, charging current and noise, analysed six ways, from a straight line through raw data to a Butler–Volmer fit of the whole curve.</p>
+      <ul class="findings">
+        <li><b>232</b><span>mV/dec from raw 10–50 mA cm⁻² data with R² = 0.989. The true slope is 118.</span></li>
+        <li><b>219 of 702</b><span>Fitting windows on the raw data that land within 5 % of the truth.</span></li>
+        <li><b>118.4</b><span>mV/dec from the full Butler–Volmer fit, which also returns the ohmic resistance and charging current.</span></li>
+      </ul>
+      <a href="https://github.com/pooriamn/electrochem-toolkit/tree/main/studies/tafel-analysis">What to report instead</a>
     </div>
   </article>
 </section>
@@ -259,6 +301,9 @@ footer nav{display:flex;gap:18px;flex-wrap:wrap}
       <dt>inverse</dt><dd>Weighted complex least squares for RC and RQ, AICc, local uncertainty</dd>
       <dt>stack</dt><dd>Series stack DC balance, Faradaic hydrogen rate, specific energy</dd>
       <dt>electrothermal</dt><dd>Dynamic stack model with kinetics, ohmic losses and heat balance</dd>
+      <dt>flowbattery</dt><dd>Vanadium flow cell: crossover, mass transfer, pumping, remixing</dd>
+      <dt>corrosion</dt><dd>Mixed-potential curves, Tafel extrapolation, LPR, full-curve fit, ASTM G102</dd>
+      <dt>kinetics</dt><dd>Butler–Volmer sweeps, Tafel slope plots, window analysis</dd>
       <dt>polarisation</dt><dd>Tafel regression over a region you choose</dd>
       <dt>battery</dt><dd>Charge and discharge throughput from signed current</dd>
       <dt>pipeline</dt><dd>CSV validation, energy and charge integration, atomic JSON reports</dd>

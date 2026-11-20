@@ -1,7 +1,7 @@
 {
   "title": "Electrochemical Engineering Toolkit",
   "upload_type": "software",
-  "description": "Python tools for electrochemical engineering: impedance inverse modelling with model selection and parameter uncertainty, electrolyser stack and electrothermal simulation, and validated processing of measurement files.",
+  "description": "Python tools for electrochemical engineering: impedance inverse modelling with model selection and parameter uncertainty, electrolyser stack and electrothermal simulation, vanadium flow battery crossover and pumping, corrosion-rate estimation, Tafel analysis, and validated processing of measurement files.",
   "creators": [{"name": "Moozarm Nia, Pooria", "orcid": "0000-0002-3049-3120"}],
   "license": "MIT",
   "keywords": ["electrochemistry", "electrochemical impedance spectroscopy", "water electrolysis", "hydrogen", "scientific computing"]

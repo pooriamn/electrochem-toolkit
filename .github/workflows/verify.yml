@@ -31,8 +31,14 @@ jobs:
         run: |
           cmp studies/eis-inverse/results.svg docs/assets/eis-results.svg
           cmp studies/electrothermal-stack/results.svg docs/assets/electrothermal-results.svg
+          cmp studies/flow-battery/results.svg docs/assets/flow-battery-results.svg
+          cmp studies/corrosion/results.svg docs/assets/corrosion-results.svg
+          cmp studies/tafel-analysis/results.svg docs/assets/tafel-results.svg
       - run: python studies/eis-inverse/run.py
       - run: python studies/electrothermal-stack/run.py
+      - run: python studies/flow-battery/run.py
+      - run: python studies/corrosion/run.py
+      - run: python studies/tafel-analysis/run.py
       - uses: actions/upload-artifact@v4
         if: matrix.python-version == '3.12'
         with:
