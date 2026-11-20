@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.4.0
+
+- Moved the toolkit out of my profile repository into its own home, `pooriamn/electrochem-toolkit`. History is preserved.
+- Renamed `projects/` to `examples/` and `journal/` to `notes/`; the package README is now the repository README.
+- Redrew both study figures with a shared style (`electrochem_toolkit.plotstyle`): panel letters, ±2σ residual band, ΔAICc and α on the EIS figure, thermoneutral shading and energy-closure note on the electrothermal figure. Numerical results are unchanged.
+- One-page website with a live impedance explorer, stack calculator and charge-throughput tool, in light and dark themes.
+- Fixed the version reported by `__version__` and `CITATION.cff` (both still said 0.2.0).
+- CI now tests Python 3.10, 3.12 and 3.13. Release notes are taken from the matching changelog section, and PyPI publishing is ready to switch on.
+- Removed the public-activity snapshot workflow and its weekly bot commits.
+
 ## 0.3.0
 
 - Added independently integrated charge (Ah) and time-averaged current (A) to experimental CSV reports, while retaining existing report fields and validation rules.

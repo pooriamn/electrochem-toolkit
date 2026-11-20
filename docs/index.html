@@ -1,15 +1,391 @@
 <!doctype html>
-<html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Pooria Moozarm Nia — electrochemist and Principal Scientist working on electrochemical engineering, scientific software and automation."><title>Pooria Moozarm Nia | Electrochemistry & Scientific Software</title>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Electrochemical Engineering Toolkit | Pooria Moozarm Nia</title>
+<meta name="description" content="Python tools for electrochemical engineering: impedance inverse modelling, electrolyser stack and electrothermal simulation, and validated measurement reports. Try the calculations in your browser.">
+<link rel="canonical" href="https://pooriamn.github.io/electrochem-toolkit/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Electrochemical Engineering Toolkit">
+<meta property="og:description" content="Impedance fitting, electrolyser stacks and measurement reports, with the physics written down and tested.">
+<meta property="og:url" content="https://pooriamn.github.io/electrochem-toolkit/">
+<meta property="og:image" content="https://pooriamn.github.io/electrochem-toolkit/assets/social-preview.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@pooriamn">
+<meta name="theme-color" content="#F3F6F5" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0C171C" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230C171C'/%3E%3Cpath d='M6 23a10 9 0 0 1 20 0' fill='none' stroke='%234FC1B8' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;600&family=Fira+Mono&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"SoftwareSourceCode","name":"Electrochemical Engineering Toolkit","codeRepository":"https://github.com/pooriamn/electrochem-toolkit","programmingLanguage":"Python","license":"https://opensource.org/licenses/MIT","keywords":"electrochemistry, electrochemical impedance spectroscopy, water electrolysis, hydrogen, scientific computing","author":{"@type":"Person","name":"Pooria Moozarm Nia","jobTitle":"Electrochemist and Principal Scientist","url":"https://github.com/pooriamn","sameAs":["https://scholar.google.com/citations?user=SaiB5-8AAAAJ","https://orcid.org/0000-0002-3049-3120","https://uk.linkedin.com/in/pooriamn"]}}
+</script>
 <style>
-:root{color-scheme:light;--ink:#162c3a;--muted:#48606e;--accent:#116b72;--line:#dce5e7;--bg:#f7f9fa}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 system-ui,sans-serif}main,nav,footer{max-width:1060px;margin:auto;padding:0 28px}header{background:#101d2b;color:#fff;padding:24px 0 65px}nav{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}nav a,header a{color:#b5e2e2}a{color:var(--accent);text-underline-offset:4px}h1{font-size:clamp(2.1rem,5vw,4rem);line-height:1.13;margin:55px 0 14px;letter-spacing:-.04em}h2{font-size:1.55rem;margin:0 0 14px;letter-spacing:-.02em}h3{line-height:1.3;margin:0 0 8px}.hero{max-width:1060px;margin:auto;padding:0 28px}.hero p{max-width:700px;color:#c5d8df;font-size:1.1rem}.eyebrow{font-size:.8rem;letter-spacing:.15em;font-weight:700;color:#75d1d0}section{padding:48px 0;border-bottom:1px solid var(--line)}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}.card{background:white;border:1px solid var(--line);border-radius:10px;padding:22px}.card p{color:var(--muted)}.tag{font-size:.78rem;color:var(--accent);font-weight:600}footer{padding-top:28px;padding-bottom:36px;color:var(--muted)}a:focus-visible{outline:3px solid #f0ae52;outline-offset:4px}
-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:12px;margin:20px 0}label{font-size:.85rem;font-weight:600;display:block}input{width:100%;margin-top:5px;padding:9px;border:1px solid #a8bdc5;border-radius:5px;font:inherit}button{align-self:end;padding:11px 16px;background:#116b72;color:white;border:0;border-radius:5px;font:inherit;cursor:pointer}output{display:block;background:white;border:1px solid var(--line);padding:16px;border-radius:8px;white-space:pre-line}button:focus-visible,input:focus-visible{outline:3px solid #f0ae52;outline-offset:2px}.card{padding:0;overflow:hidden;display:flex;flex-direction:column}.card .body{padding:22px;flex:1;display:flex;flex-direction:column;align-items:flex-start}.card img{display:block;width:100%;height:auto;aspect-ratio:1200/640;object-fit:contain;background:#f4f7f8;border-bottom:1px solid var(--line)}.card p{flex:1}.hero h1{max-width:850px}header{position:relative;overflow:hidden;background:linear-gradient(120deg,#0c1b28,#183445)}nav,.hero{position:relative;z-index:1}.hero p{max-width:710px}.hero a{display:inline-block;border-bottom:1px solid #8acbc6;padding-bottom:3px;text-decoration:none}header:after{content:"";position:absolute;inset:0 0 0 62%;background-image:linear-gradient(#9bb9c319 1px,transparent 1px),linear-gradient(90deg,#9bb9c319 1px,transparent 1px);background-size:36px 36px;mask-image:linear-gradient(90deg,transparent,#000);pointer-events:none}.tag{letter-spacing:.08em;font-size:.72rem}.card h3{margin-top:9px}section{padding:54px 0}output{font-variant-numeric:tabular-nums} @media(max-width:640px){main,nav,footer,.hero{padding-left:20px;padding-right:20px}header{padding-bottom:40px}.hero h1{margin-top:38px}.cards{grid-template-columns:1fr}section{padding:36px 0}}</style><meta property="og:title" content="Pooria Moozarm Nia | Electrochemistry & Scientific Software"><meta property="og:description" content="Electrochemical engineering, scientific software, automation and practical engineering tools."><meta property="og:type" content="website"><script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Pooria Moozarm Nia","jobTitle":"Electrochemist and Principal Scientist","url":"https://pooriamn.github.io/pooriamn/","sameAs":["https://github.com/pooriamn","https://scholar.google.com/citations?user=SaiB5-8AAAAJ","https://orcid.org/0000-0002-3049-3120","https://uk.linkedin.com/in/pooriamn","https://www.instagram.com/pooriamn/"],"knowsAbout":["Electrochemistry","Electrochemical engineering","Scientific computing","Water electrolysis","Batteries","Software engineering","Automation"]}</script></head><body><header><nav><strong>Pooria Moozarm Nia</strong><a href="https://github.com/pooriamn">GitHub profile</a></nav><div class="hero"><h1>Electrochemistry,<br>with an engineering mindset.</h1><p>I'm an electrochemist and Principal Scientist. I develop electrochemical systems and write the software that makes them easier to test, monitor and improve.</p><p><a href="#projects">See the projects</a></p></div></header><main>
-<section><h2>About</h2><p>I have a PhD in Analytical Chemistry and more than a decade of experience across academic and industrial R&amp;D. Most of my work has been in electrochemical energy technologies, from electrode materials and diagnostics to experimental rigs, cell and stack development and industrial scale-up.</p><p>I write software in Python and MATLAB to solve the problems that sit around those systems: collecting data, running tests, analysing measurements and getting useful information to the people making engineering decisions.</p></section>
-<section><h2>Selected computational studies</h2><p>Two examples that go beyond basic calculations: constrained impedance inverse modelling and dynamic electrothermal stack simulation. Both use synthetic data, documented assumptions and numerical verification.</p><div class="cards"><article class="card"><div class="body"><span class="tag">INVERSE MODELLING</span><h3>Electrochemical impedance</h3><p>Compare RC and RQ circuits using complex nonlinear least squares, analytic derivatives, model selection and local uncertainty.</p><a href="https://github.com/pooriamn/pooriamn/tree/main/studies/eis-inverse">Methods, code and results</a></div></article><article class="card"><div class="body"><span class="tag">DYNAMIC SIMULATION</span><h3>Electrothermal stack model</h3><p>Couple electrochemical losses with temperature and heat transfer, and verify energy conservation during a load programme.</p><a href="https://github.com/pooriamn/pooriamn/tree/main/studies/electrothermal-stack">Methods, code and results</a></div></article></div></section><section id="projects"><h2>Getting started</h2><p>Three small projects that illustrate the kind of work I enjoy. They use synthetic data and standard equations, so you can run them without laboratory equipment or proprietary software.</p><div class="cards">
-<article class="card"><img src="assets/nyquist.svg" alt="Calculated synthetic Nyquist response" width="1200" height="640" loading="lazy"><div class="body"><span class="tag">SCIENTIFIC COMPUTING</span><h3>Electrochemical analysis</h3><p>Fit a simple equivalent circuit and recover its parameters from a synthetic impedance spectrum.</p><a href="https://github.com/pooriamn/pooriamn/tree/main/projects/electrochemical-analysis">View source and notes</a></div></article>
-<article class="card"><img src="assets/stack-balance.svg" alt="Illustrative series stack DC balance" width="1200" height="640" loading="lazy"><div class="body"><span class="tag">ENGINEERING</span><h3>Electrolyser calculator</h3><p>Estimate stack power, hydrogen output and DC energy consumption from basic operating inputs.</p><a href="https://github.com/pooriamn/pooriamn/tree/main/projects/electrolyser-calculator">View source and notes</a></div></article>
-<article class="card"><img src="assets/workflow.svg" alt="Experimental data processing flow" width="1200" height="640" loading="lazy"><div class="body"><span class="tag">AUTOMATION</span><h3>Experimental pipeline</h3><p>Check a measurement file, integrate energy and generate a repeatable, traceable report.</p><a href="https://github.com/pooriamn/pooriamn/tree/main/projects/experimental-pipeline">View source and notes</a></div></article>
-</div></section><section><h2>Engineering workbench</h2><p>The public Python toolkit brings the calculation modules together, with a command-line interface and a separate interactive browser demonstration.</p><p><a href="toolkit.html">Open the workbench</a> · <a href="https://github.com/pooriamn/pooriamn/tree/main/toolkit">Install the Python package</a> · <a href="https://github.com/pooriamn/pooriamn/tree/main/journal">Read development notes</a></p><h2>Try a stack calculation</h2><p>Change the operating inputs to see how the electrical load and hydrogen output vary. The defaults are illustrative, not equipment specifications.</p><form id="stack"><label>Cells<input name="cells" type="number" min="1" step="1" max="10000" value="10" required></label><label>Cell area (cm²)<input name="area" type="number" min="0.000001" max="1000000" step="any" value="100" required></label><label>Current density (A/cm²)<input name="density" type="number" min="0.000001" max="1000" step="any" value="0.3" required></label><label>Cell voltage (V)<input name="voltage" type="number" min="0.000001" max="1000" step="any" value="1.8" required></label><label>Faradaic efficiency (%)<input name="efficiency" type="number" min="0.001" max="100" step="any" value="100" required></label><button type="submit">Calculate</button></form><output id="result" aria-live="polite"></output><p><small>Assumptions: steady state, identical series cells, DC only; excludes auxiliaries, AC losses, heat transfer, crossover and pressure effects. Not for equipment control or safety decisions.</small></p></section><section><h2>Development activity</h2><p>A public-only snapshot of releases, issues and pull requests for this repository.</p><img src="assets/public-activity.svg" alt="Public repository activity summary" style="width:100%;max-width:900px;height:auto"><p><a href="https://github.com/pooriamn/pooriamn/tree/main/activity">Activity details</a></p></section><section><h2>What I enjoy building</h2><p>Scientific software, experimental automation and engineering platforms. I like connecting instruments, data and analysis in a way that makes the underlying process easier to run rather than harder to understand.</p><p>Away from work, I spend a fair amount of time with a camera, mostly photographing architecture, light and perspective.</p></section></main><footer>London, United Kingdom · <a href="https://github.com/pooriamn">GitHub</a> · <a href="https://scholar.google.com/citations?user=SaiB5-8AAAAJ">Google Scholar</a> · <a href="https://orcid.org/0000-0002-3049-3120">ORCID</a> · <a href="https://uk.linkedin.com/in/pooriamn">LinkedIn</a> · <a href="https://www.instagram.com/pooriamn/">Instagram</a></footer><script>
-const form=document.getElementById("stack"), result=document.getElementById("result");
-function calculate(event){if(event)event.preventDefault();if(!form.checkValidity()){result.textContent="Check the input values.";return;}const d=new FormData(form), n=Number(d.get("cells")), a=Number(d.get("area")), j=Number(d.get("density")), v=Number(d.get("voltage")), eta=Number(d.get("efficiency"))/100;const current=a*j, voltage=n*v, power=current*voltage/1000, h2=n*current*eta*3600*.00201588/(2*96485.33212);const fmt=x=>x.toLocaleString("en-GB",{maximumSignificantDigits:5});result.textContent="Stack current: "+fmt(current)+" A\nStack voltage: "+fmt(voltage)+" V\nDC power: "+fmt(power)+" kW\nHydrogen production: "+fmt(h2)+" kg/h\nDC specific energy: "+fmt(power/h2)+" kWh/kg";}
-form.addEventListener("submit",calculate);calculate();
-</script></body></html>
+:root{
+  --paper:#F3F6F5; --surface:#FFFFFF; --ink:#12242C; --muted:#5E6F77; --rule:#D5DEDD;
+  --teal:#0B7A75; --amber:#B97C0F; --slate:#34508A; --plate:#FFFFFF;
+  --sans:"Fira Sans",system-ui,sans-serif; --mono:"Fira Mono",ui-monospace,monospace;
+  --measure:68ch;
+}
+@media (prefers-color-scheme:dark){
+  :root{--paper:#0C171C;--surface:#13232A;--ink:#E6EEEC;--muted:#8FA3A8;--rule:#20343B;
+        --teal:#4FC1B8;--amber:#E9B44C;--slate:#8EA7DA;}
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 17px/1.6 var(--sans);-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+a{color:var(--teal);text-underline-offset:3px;text-decoration-thickness:1px}
+a:hover{text-decoration-thickness:2px}
+:focus-visible{outline:3px solid var(--amber);outline-offset:3px;border-radius:2px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 32px}
+h1,h2,h3{font-weight:600;line-height:1.12;margin:0}
+h2{font-size:clamp(1.7rem,3vw,2.3rem);letter-spacing:-.015em}
+h3{font-size:1.25rem;letter-spacing:-.005em}
+p{margin:0 0 1em;max-width:var(--measure)}
+code,pre{font-family:var(--mono);font-size:.88em}
+
+/* top bar */
+.bar{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:22px 0}
+.bar strong{font-weight:500;font-size:1rem}
+.bar nav{display:flex;gap:22px;flex-wrap:wrap}
+.bar nav a{color:var(--ink);text-decoration:none;font-size:.95rem}
+.bar nav a:hover{color:var(--teal)}
+
+/* hero */
+.hero>*,.sec-head>*,.study>*,.tools>*,.pkg>*,.author>*{min-width:0}
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:56px;align-items:center;padding:48px 0 88px}
+.hero h1{font-size:clamp(2.6rem,5.6vw,4.6rem);letter-spacing:-.03em;margin-bottom:24px}
+.lede{font-size:1.2rem;color:var(--muted);max-width:34ch}
+.install{display:flex;align-items:center;gap:10px;margin-top:32px;background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:12px 12px 12px 16px;max-width:520px}
+.install code{flex:1;overflow-x:auto;white-space:nowrap;color:var(--ink)}
+.install button,.btn{font:500 .9rem var(--sans);background:var(--teal);color:var(--paper);border:0;border-radius:7px;padding:9px 14px;cursor:pointer}
+.links{margin-top:18px;display:flex;gap:22px;font-size:.98rem}
+
+.explorer{background:var(--surface);border:1px solid var(--rule);border-radius:16px;padding:22px 24px 20px}
+.explorer svg{display:block;width:100%;height:auto}
+.explorer .axis{stroke:var(--muted);stroke-width:1}
+.explorer .grid{stroke:var(--rule);stroke-width:1}
+.explorer .ref{fill:none;stroke:var(--rule);stroke-width:1.5;stroke-dasharray:4 5}
+.explorer .arc{fill:none;stroke:var(--teal);stroke-width:3;stroke-linecap:round}
+.explorer .dec circle{fill:var(--surface);stroke:var(--amber);stroke-width:2}
+.explorer text{fill:var(--muted);font:400 12px var(--sans)}
+.explorer .dec text{fill:var(--ink)}
+.controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 28px;margin-top:14px}
+.controls label{display:grid;grid-template-columns:1fr auto;font-size:.92rem;align-items:baseline;gap:4px 8px}
+.controls output{font-family:var(--mono);font-size:.85rem;color:var(--ink)}
+.controls input{grid-column:1/-1;width:100%;accent-color:var(--teal)}
+.readout{display:flex;flex-wrap:wrap;gap:6px 24px;margin:16px 0 0;padding-top:14px;border-top:1px solid var(--rule);font-size:.9rem;color:var(--muted)}
+.readout b{font-weight:500;color:var(--ink)}
+.caption{font-size:.85rem;color:var(--muted);margin:10px 0 0}
+
+/* sections */
+section{padding:88px 0;border-top:1px solid var(--rule)}
+.sec-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:56px;margin-bottom:48px}
+.sec-head p{color:var(--muted);margin:0}
+.study{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:48px;align-items:start;margin-bottom:72px}
+.study:last-child{margin-bottom:0}
+.study.flip{grid-template-columns:minmax(0,1fr) minmax(0,1.5fr)}
+.study.flip figure{order:2}
+figure{margin:0;background:var(--plate);border-radius:12px;padding:14px;border:1px solid var(--rule)}
+figure img{display:block;width:100%;height:auto}
+.study h3{margin-bottom:14px}
+.findings{list-style:none;padding:0;margin:20px 0 22px;border-top:1px solid var(--rule)}
+.findings li{display:grid;grid-template-columns:7.5rem 1fr;gap:16px;padding:12px 0;border-bottom:1px solid var(--rule);font-size:.95rem}
+.findings b{font-weight:600;font-size:1.15rem;color:var(--teal);line-height:1.3}
+
+.tools{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:28px}
+.tool{background:var(--surface);border:1px solid var(--rule);border-radius:14px;padding:26px}
+.tool h3{margin-bottom:8px}
+.tool > p{color:var(--muted);font-size:.95rem}
+.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:18px 0;align-items:end}
+.fields label{font-size:.85rem;font-weight:500;display:block}
+.fields input,textarea{display:block;width:100%;margin-top:6px;padding:9px 10px;border:1px solid var(--rule);border-radius:7px;background:var(--paper);color:var(--ink);font:400 .95rem var(--mono)}
+textarea{min-height:120px;resize:vertical}
+.result{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));background:var(--paper);border:1px solid var(--rule);border-radius:9px;overflow:hidden;margin-top:18px}
+.result div{padding:12px 14px;box-shadow:inset -1px -1px 0 var(--rule)}
+.result span{display:block;font-size:.8rem;color:var(--muted)}
+.result strong{font-weight:500;font-size:1.15rem}
+.error{color:var(--amber);font-size:.9rem;margin-top:12px;min-height:1.4em}
+.small{font-size:.85rem;color:var(--muted);margin-top:14px}
+
+.pkg{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px}
+dl{margin:0;display:grid;grid-template-columns:auto 1fr;border-top:1px solid var(--rule)}
+dt,dd{margin:0;padding:11px 0;border-bottom:1px solid var(--rule)}
+dt{font-family:var(--mono);font-size:.9rem;padding-right:24px;color:var(--teal)}
+dd{color:var(--muted);font-size:.95rem}
+pre{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:20px;overflow-x:auto;line-height:1.55;margin:0 0 16px}
+pre .c{color:var(--muted)}
+
+.author{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:56px}
+.author p{color:var(--muted)}
+footer{padding:36px 0 48px;border-top:1px solid var(--rule);color:var(--muted);font-size:.9rem;display:flex;gap:20px;flex-wrap:wrap;justify-content:space-between}
+footer nav{display:flex;gap:18px;flex-wrap:wrap}
+
+@media (max-width:900px){
+  .hero,.sec-head,.study,.study.flip,.tools,.pkg,.author{grid-template-columns:1fr;gap:28px}
+  .study.flip figure{order:0}
+  .hero{padding-top:24px}
+  section{padding:64px 0}
+}
+@media (max-width:560px){
+  .wrap{padding:0 20px}
+  dl{grid-template-columns:1fr}dt{border-bottom:0;padding-bottom:0}
+  .bar nav{gap:14px}
+  .controls{grid-template-columns:1fr}
+  .findings li{grid-template-columns:1fr;gap:2px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="bar">
+  <strong>Electrochemical Engineering Toolkit</strong>
+  <nav aria-label="Sections">
+    <a href="#studies">Studies</a><a href="#workbench">Workbench</a><a href="#package">Package</a><a href="https://github.com/pooriamn/electrochem-toolkit">GitHub</a>
+  </nav>
+</header>
+
+<main>
+<div class="hero">
+  <div>
+    <h1>Electrochemical calculations you can check.</h1>
+    <p class="lede">Impedance fitting, electrolyser stacks and measurement reports, written as a small Python package with the physics stated and every result tested.</p>
+    <div class="install">
+      <code id="cmd">pip install "git+https://github.com/pooriamn/electrochem-toolkit"</code>
+      <button type="button" id="copy">Copy</button>
+    </div>
+    <div class="links"><a href="https://github.com/pooriamn/electrochem-toolkit">Source on GitHub</a><a href="#studies">Read the studies</a></div>
+  </div>
+
+  <div class="explorer" aria-labelledby="exp-title">
+    <h3 id="exp-title" style="font-size:1rem;font-weight:500;margin-bottom:6px">Move α and watch the arc flatten</h3>
+    <svg id="nyq" viewBox="0 0 560 318" role="img" aria-label="Nyquist plot of a series resistance with a resistor and constant-phase element in parallel">
+      <g id="grid"></g>
+      <path class="ref" id="ref"></path>
+      <path class="arc" id="arc"></path>
+      <g class="dec" id="dec"></g>
+    </svg>
+    <div class="controls">
+      <label for="a">Exponent α <output id="ao"></output><input id="a" type="range" min="0.5" max="1" step="0.01" value="0.82"></label>
+      <label for="r">Polarisation resistance R <output id="ro"></output><input id="r" type="range" min="0.2" max="3" step="0.05" value="0.8"></label>
+      <label for="rs">Series resistance Rs <output id="rso"></output><input id="rs" type="range" min="0" max="1" step="0.01" value="0.12"></label>
+      <label for="t">Time constant τ <output id="to"></output><input id="t" type="range" min="-4" max="0" step="0.05" value="-1.9"></label>
+    </div>
+    <p class="readout" id="read"></p>
+    <p class="caption">Z = Rs + R / (1 + (jωτ)<sup>α</sup>). Dashed: the ideal capacitor, α = 1. Dots mark each decade of frequency.</p>
+  </div>
+</div>
+
+<section id="studies">
+  <div class="sec-head">
+    <h2>Two studies</h2>
+    <p>Each one starts from synthetic data with known answers, so the method can be judged on whether it gets them back. The code, assumptions and tests are all in the repository.</p>
+  </div>
+
+  <article class="study">
+    <figure><img src="assets/eis-results.svg" alt="Nyquist and Bode plots of a synthetic spectrum fitted with RC and RQ circuits, with standardised residuals" loading="lazy" width="1050" height="740"></figure>
+    <div>
+      <h3>Ideal capacitor or constant-phase element?</h3>
+      <p>The same noisy spectrum, fitted twice. Weighted complex least squares with an analytic Jacobian and multistart, compared by AICc, with identifiability checked from the Jacobian's singular values.</p>
+      <ul class="findings">
+        <li><b>±2σ</b><span>RQ residuals look like noise. RC residuals reach 30σ and have obvious structure.</span></li>
+        <li><b>0.819</b><span>Recovered α, ± 0.001, against a true value of 0.82.</span></li>
+        <li><b>22,800</b><span>AICc difference in favour of the constant-phase model.</span></li>
+      </ul>
+      <a href="https://github.com/pooriamn/electrochem-toolkit/tree/main/studies/eis-inverse">Method and limits</a>
+    </div>
+  </article>
+
+  <article class="study flip">
+    <figure><img src="assets/electrothermal-results.svg" alt="Step current load, stack temperature, cell voltage against thermoneutral and reversible voltage, and cumulative energy balance" loading="lazy" width="1050" height="740"></figure>
+    <div>
+      <h3>Where does the heat go in a stack?</h3>
+      <p>A lumped electrothermal model of a 20-cell electrolyser: Nernst-corrected reversible voltage, apparent Butler–Volmer kinetics, Arrhenius resistance and a heat balance, run through a step load.</p>
+      <ul class="findings">
+        <li><b>1.48 V</b><span>Thermoneutral voltage. Above it the stack heats, below it the stack cools.</span></li>
+        <li><b>45 °C</b><span>Peak temperature from a 25 °C start during the 1 A cm⁻² step.</span></li>
+        <li><b>10⁻⁸ J</b><span>Largest energy-balance residual over the run, from energies integrated as ODE states.</span></li>
+      </ul>
+      <a href="https://github.com/pooriamn/electrochem-toolkit/tree/main/studies/electrothermal-stack">Equations and checks</a>
+    </div>
+  </article>
+</section>
+
+<section id="workbench">
+  <div class="sec-head">
+    <h2>Workbench</h2>
+    <p>The same equations as the Python package, reimplemented in JavaScript so they run here without a server. Defaults are illustrative, not equipment specifications.</p>
+  </div>
+  <div class="tools">
+    <div class="tool">
+      <h3>Stack balance</h3>
+      <p>Series stack of identical cells at steady state, DC only. Cell voltage is an input, not a prediction.</p>
+      <form id="stack" class="fields">
+        <label>Cells<input name="cells" type="number" min="1" max="10000" step="1" value="10" required></label>
+        <label>Area per cell (cm²)<input name="area" type="number" min="0.000001" max="1000000" step="any" value="100" required></label>
+        <label>Current density (A/cm²)<input name="j" type="number" min="0.000001" max="1000" step="any" value="0.3" required></label>
+        <label>Cell voltage (V)<input name="v" type="number" min="0.000001" max="1000" step="any" value="1.8" required></label>
+        <label>Faradaic efficiency (%)<input name="eff" type="number" min="0.001" max="100" step="any" value="100" required></label>
+      </form>
+      <div class="result" id="stackout" aria-live="polite"></div>
+      <p class="error" id="stackerr"></p>
+    </div>
+    <div class="tool">
+      <h3>Charge throughput</h3>
+      <p>Time in seconds and signed current in amperes, one pair per line. Positive is charge. Segments are split where the current crosses zero.</p>
+      <form id="battery">
+        <label class="small" for="samples" style="margin:0">Time, current</label>
+        <textarea id="samples" name="samples" spellcheck="false" required>0,2
+3600,2
+7200,-2</textarea>
+      </form>
+      <div class="result" id="batout" aria-live="polite"></div>
+      <p class="error" id="baterr"></p>
+    </div>
+  </div>
+</section>
+
+<section id="package">
+  <div class="sec-head">
+    <h2>The package</h2>
+    <p>The core has no dependencies beyond the Python standard library. The studies add NumPy, SciPy and Matplotlib through the <code>advanced</code> extra.</p>
+  </div>
+  <div class="pkg">
+    <dl>
+      <dt>impedance</dt><dd>Rs + (Rct ∥ C) response, Bode magnitude and phase, grid fitting</dd>
+      <dt>inverse</dt><dd>Weighted complex least squares for RC and RQ, AICc, local uncertainty</dd>
+      <dt>stack</dt><dd>Series stack DC balance, Faradaic hydrogen rate, specific energy</dd>
+      <dt>electrothermal</dt><dd>Dynamic stack model with kinetics, ohmic losses and heat balance</dd>
+      <dt>polarisation</dt><dd>Tafel regression over a region you choose</dd>
+      <dt>battery</dt><dd>Charge and discharge throughput from signed current</dd>
+      <dt>pipeline</dt><dd>CSV validation, energy and charge integration, atomic JSON reports</dd>
+    </dl>
+    <div>
+<pre><span class="c"># command line</span>
+electrochem-toolkit stack --cells 10 --area 100 \
+    --density 0.3 --voltage 1.8
+
+<span class="c"># Python</span>
+from electrochem_toolkit.stack import calculate
+calculate(10, 100, 0.3, 1.8)["dc_specific_energy_kWh_kg"]
+<span class="c"># 47.86</span></pre>
+      <p class="small">Tested on Python 3.10, 3.12 and 3.13 on every commit. MIT licence. <a href="https://github.com/pooriamn/electrochem-toolkit/blob/main/CHANGELOG.md">Changelog</a></p>
+    </div>
+  </div>
+</section>
+
+<section class="author" id="about">
+  <h2>Who wrote it</h2>
+  <div>
+    <p>I'm Pooria Moozarm Nia, an electrochemist and Principal Scientist in London. My PhD was in analytical chemistry, and I've spent more than ten years in academic and industrial R&amp;D on electrochemical energy: water electrolysis, batteries, fuel cells and redox flow, from electrode materials and impedance diagnostics to test rigs, stack development and scale-up.</p>
+    <p>Developing the technology is only half the job. Someone still has to run the experiments, make sense of the data and keep the process honest. This toolkit is the public part of that work.</p>
+    <p><a href="https://github.com/pooriamn">GitHub</a> &nbsp; <a href="https://scholar.google.com/citations?user=SaiB5-8AAAAJ">Google Scholar</a> &nbsp; <a href="https://orcid.org/0000-0002-3049-3120">ORCID</a> &nbsp; <a href="https://uk.linkedin.com/in/pooriamn">LinkedIn</a></p>
+  </div>
+</section>
+</main>
+
+<footer>
+  <span>Synthetic data throughout. Not for equipment control or safety decisions.</span>
+  <nav aria-label="Repository"><a href="https://github.com/pooriamn/electrochem-toolkit">Source</a><a href="https://github.com/pooriamn/electrochem-toolkit/issues">Issues</a><a href="https://github.com/pooriamn/electrochem-toolkit/blob/main/CITATION.cff">Cite</a></nav>
+</footer>
+</div>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const fmt = (x, d = 4) => Number(x).toLocaleString("en-GB", {maximumSignificantDigits: d});
+
+  /* copy install command */
+  $("copy").addEventListener("click", async () => {
+    try { await navigator.clipboard.writeText($("cmd").textContent); $("copy").textContent = "Copied"; }
+    catch { $("copy").textContent = "Select and copy"; }
+    setTimeout(() => $("copy").textContent = "Copy", 1600);
+  });
+
+  /* impedance explorer: Z = Rs + R / (1 + (j w tau)^a) */
+  const W = 560, H = 300, L = 44, B = 262, T = 14, Rt = 16;
+  const svgNS = "http://www.w3.org/2000/svg";
+  const el = (tag, attrs, text) => { const e = document.createElementNS(svgNS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; return e; };
+  function Z(w, rs, r, tau, a) {
+    const m = Math.pow(w * tau, a), ph = a * Math.PI / 2;
+    const dr = 1 + m * Math.cos(ph), di = m * Math.sin(ph), d = dr * dr + di * di;
+    return [rs + r * dr / d, r * di / d];           // [Re Z, -Im Z]
+  }
+  function niceStep(x) { const p = Math.pow(10, Math.floor(Math.log10(x))); const n = x / p; return (n < 2 ? 0.2 : n < 5 ? 0.5 : 1) * p * 2; }
+  function draw() {
+    const a = +$("a").value, r = +$("r").value, rs = +$("rs").value, tau = Math.pow(10, +$("t").value);
+    $("ao").textContent = a.toFixed(2); $("ro").textContent = r.toFixed(2) + " Ω";
+    $("rso").textContent = rs.toFixed(2) + " Ω"; $("to").textContent = fmt(tau, 2) + " s";
+    const span = Math.max(rs + r, 0.5) * 1.06, s = (W - L - Rt) / span;
+    const X = x => L + x * s, Y = y => B - y * s;
+    const grid = $("grid"); grid.replaceChildren();
+    const step = niceStep(span / 4);
+    for (let v = 0; v <= span + 1e-9; v += step) {
+      grid.append(el("line", {class: "grid", x1: X(v), x2: X(v), y1: T, y2: B}));
+      grid.append(el("text", {x: X(v), y: B + 18, "text-anchor": "middle"}, fmt(v, 3)));
+    }
+    for (let v = step; Y(v) > T + 4; v += step) {
+      grid.append(el("line", {class: "grid", x1: L, x2: W - Rt, y1: Y(v), y2: Y(v)}));
+      grid.append(el("text", {x: L - 8, y: Y(v) + 4, "text-anchor": "end"}, fmt(v, 3)));
+    }
+    grid.append(el("line", {class: "axis", x1: L, x2: W - Rt, y1: B, y2: B}));
+    grid.append(el("line", {class: "axis", x1: L, x2: L, y1: T, y2: B}));
+    grid.append(el("text", {x: W - Rt, y: B + 40, "text-anchor": "end"}, "Re Z / Ω"));
+    grid.append(el("text", {x: L + 8, y: T + 12}, "−Im Z / Ω"));
+    const path = (alpha) => { let d = ""; for (let i = 0; i <= 240; i++) { const w = Math.pow(10, 6 - i * 12 / 240) / tau; const [x, y] = Z(w, rs, r, tau, alpha); d += (i ? "L" : "M") + X(x).toFixed(1) + " " + Y(y).toFixed(1); } return d; };
+    $("arc").setAttribute("d", path(a)); $("ref").setAttribute("d", path(1));
+    const dec = $("dec"); dec.replaceChildren();
+    const lo = Math.ceil(Math.log10(1e-3 / tau / (2 * Math.PI))), hi = Math.floor(Math.log10(1e3 / tau / (2 * Math.PI)));
+    for (let k = lo; k <= hi; k++) {
+      const f = Math.pow(10, k), [x, y] = Z(2 * Math.PI * f, rs, r, tau, a);
+      if (y * s < 3 && k !== lo && k !== hi) continue;
+      dec.append(el("circle", {cx: X(x), cy: Y(y), r: 4.5}));
+      if (y * s > 18) dec.append(el("text", {x: X(x), y: Y(y) - 10, "text-anchor": "middle"}, (f >= 1000 ? fmt(f / 1000) + " kHz" : fmt(f) + " Hz")));
+    }
+    const peak = Z(1 / tau, rs, r, tau, a)[1];
+    $("read").innerHTML = `<span>Apex at <b>${fmt(1 / (2 * Math.PI * tau), 3)} Hz</b></span><span>Arc height <b>${fmt(peak, 3)} Ω</b></span><span>Intercepts <b>${fmt(rs, 3)}</b> and <b>${fmt(rs + r, 3)} Ω</b></span>`;
+  }
+  ["a", "r", "rs", "t"].forEach(id => $(id).addEventListener("input", draw));
+  draw();
+
+  /* stack balance */
+  const sf = $("stack");
+  function stack() {
+    const err = $("stackerr"), out = $("stackout");
+    if (!sf.checkValidity()) { err.textContent = "Each input needs a positive number within range."; return; }
+    err.textContent = "";
+    const d = new FormData(sf), n = +d.get("cells"), A = +d.get("area"), j = +d.get("j"), v = +d.get("v"), eff = +d.get("eff") / 100;
+    const I = A * j, V = n * v, P = I * V / 1000, h2 = n * I * eff * 3600 * 0.00201588 / (2 * 96485.33212);
+    const rows = [["Stack current", fmt(I, 5) + " A"], ["Stack voltage", fmt(V, 5) + " V"], ["DC power", fmt(P, 5) + " kW"],
+                  ["Hydrogen", fmt(h2, 5) + " kg h⁻¹"], ["Specific energy", fmt(P / h2, 5) + " kWh kg⁻¹"]];
+    out.innerHTML = rows.map(([k, val]) => `<div><span>${k}</span><strong>${val}</strong></div>`).join("");
+  }
+  sf.addEventListener("input", stack); sf.addEventListener("submit", e => { e.preventDefault(); stack(); }); stack();
+
+  /* charge throughput */
+  const bf = $("battery");
+  function battery() {
+    const err = $("baterr"), out = $("batout");
+    try {
+      const lines = $("samples").value.trim().split(/\r?\n/).filter(l => l.trim());
+      const p = lines.map((l, i) => { const a = l.split(","); if (a.length !== 2 || a.some(x => !x.trim() || !Number.isFinite(+x))) throw Error(`Line ${i + 1} needs two numbers separated by a comma.`); return a.map(Number); });
+      if (p.length < 2) throw Error("Enter at least two samples.");
+      let q = 0, dq = 0;
+      for (let k = 1; k < p.length; k++) {
+        const [t0, i0] = p[k - 1], [t1, i1] = p[k], dt = t1 - t0;
+        if (dt <= 0) throw Error(`Time must increase: line ${k + 1} is not later than line ${k}.`);
+        const seg = i0 * i1 < 0 ? [i0 * dt * Math.abs(i0) / (Math.abs(i0) + Math.abs(i1)) / 2, i1 * dt * Math.abs(i1) / (Math.abs(i0) + Math.abs(i1)) / 2] : [dt * (i0 + i1) / 2];
+        for (const s of seg) { q += Math.max(s, 0); dq -= Math.min(s, 0); }
+      }
+      err.textContent = "";
+      out.innerHTML = [["Charge", q], ["Discharge", dq], ["Net", q - dq]].map(([k, v]) => `<div><span>${k}</span><strong>${fmt(v / 3600)} Ah</strong></div>`).join("");
+    } catch (e) { err.textContent = e.message; out.innerHTML = ""; }
+  }
+  bf.addEventListener("input", battery); battery();
+})();
+</script>
+</body>
+</html>
