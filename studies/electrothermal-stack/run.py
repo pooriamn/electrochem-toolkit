@@ -2,10 +2,8 @@
 import csv
 import json
 from pathlib import Path
-import matplotlib
-matplotlib.use("Agg")
-matplotlib.rcParams["svg.hashsalt"]="electrochem-toolkit-study"
-matplotlib.rcParams.update({"font.size":10,"axes.spines.top":False,"axes.spines.right":False,"axes.titleweight":"semibold","axes.prop_cycle":matplotlib.cycler(color=["#156b79","#b96138","#395575","#7f8d96"])})
+from electrochem_toolkit import plotstyle
+plotstyle.apply()
 import matplotlib.pyplot as plt
 from electrochem_toolkit.electrothermal import Stack,simulate
 
@@ -24,22 +22,30 @@ def main():
     (out/"summary.json").write_text(json.dumps(summary,indent=2,allow_nan=False)+"\n")
     print(json.dumps(summary,indent=2,allow_nan=False))
     t=[r["time_s"]/60 for r in rows]
-    fig,axes=plt.subplots(2,2,figsize=(10,7),layout="constrained")
-    ax=axes[0,0];ax.step(t,[r["current_density_A_cm2"] for r in rows],where="post")
-    ax.set(xlabel="Time / min",ylabel="j / A cm⁻²",title="Current programme")
-    ax=axes[0,1];ax.plot(t,[r["temperature_K"]-273.15 for r in rows])
-    ax.set(xlabel="Time / min",ylabel="Temperature / °C",title="Thermal response")
-    ax=axes[1,0]
-    for field,label in [("E_rev_V","Reversible"),("E_tn_V","Thermoneutral"),("cell_voltage_V","Cell")]:
-        ax.plot(t,[r[field] for r in rows],label=label)
-    ax.set(xlabel="Time / min",ylabel="Voltage / V",title="Cell voltage");ax.legend()
+    col=lambda k:[r[k] for r in rows]
+    fig,axes=plt.subplots(2,2,figsize=(10.5,7.4),layout="constrained",sharex=True)
+    ax=axes[0,0];ax.step(t,col("current_density_A_cm2"),where="post",color=plotstyle.SLATE)
+    ax.fill_between(t,col("current_density_A_cm2"),step="post",color=plotstyle.SLATE,alpha=.08)
+    ax.set(ylabel="j / A cm⁻²",title="Load programme")
+    ax=axes[0,1];temp=[x-273.15 for x in col("temperature_K")];ax.plot(t,temp,color=plotstyle.TEAL)
+    k=max(range(len(temp)),key=temp.__getitem__)
+    ax.annotate(f"peak {temp[k]:.1f} °C",(t[k],temp[k]),xytext=(8,-4),textcoords="offset points",fontsize=8.5,va="top")
+    ax.set(ylabel="temperature / °C",title="Stack temperature")
+    ax=axes[1,0];v,etn=col("cell_voltage_V"),col("E_tn_V")
+    ax.fill_between(t,etn,v,where=[a>b for a,b in zip(v,etn)],color=plotstyle.AMBER,alpha=.15,lw=0,label="net heat release")
+    ax.plot(t,v,color=plotstyle.INK,label="cell")
+    ax.plot(t,etn,color=plotstyle.AMBER,ls="--",lw=1.4,label="thermoneutral")
+    ax.plot(t,col("E_rev_V"),color=plotstyle.TEAL,lw=1.4,label="reversible")
+    ax.set(xlabel="time / min",ylabel="voltage / V",title="Cell voltage against its thermodynamic limits");ax.legend(loc="upper right",fontsize=8)
     ax=axes[1,1]
-    for field,label in [("dc_energy_J","DC input"),("chemical_energy_J","Reaction enthalpy"),
-                        ("heat_loss_J","Heat rejected"),("thermal_storage_J","Thermal storage")]:
-        ax.plot(t,[r[field]/1e6 for r in rows],label=label)
-    ax.set(xlabel="Time / min",ylabel="Energy / MJ",title="Integrated energy balance");ax.legend(fontsize=8)
-    for ax in axes.flat:ax.grid(alpha=.2)
-    fig.suptitle("Illustrative dynamic electrolyser stack | lumped electrothermal model")
+    for field,label,c in [("dc_energy_J","DC input",plotstyle.INK),("chemical_energy_J","stored as H₂ (ΔH)",plotstyle.TEAL),
+                          ("heat_loss_J","rejected heat",plotstyle.AMBER),("thermal_storage_J","held in stack",plotstyle.SLATE)]:
+        ax.plot(t,[x/1e6 for x in col(field)],label=label,color=c)
+    res=max(abs(x) for x in col("balance_residual_J"))
+    ax.text(.03,.6,f"max balance residual {res:.1e} J",transform=ax.transAxes,ha="left",fontsize=8.5,color=plotstyle.NICKEL)
+    ax.set(xlabel="time / min",ylabel="energy / MJ",title="Cumulative energy balance");ax.legend(loc="upper left",fontsize=8)
+    for ax,l in zip(axes.flat,"abcd"): plotstyle.panel_label(ax,l)
+    fig.suptitle("Illustrative 20-cell electrolyser stack under a step load: voltage, heat and energy closure",x=.01,ha="left",fontsize=13,fontweight="semibold")
     fig.savefig(out/"results.svg",metadata={"Date":None})
     return summary
 
